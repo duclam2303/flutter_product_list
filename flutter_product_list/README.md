@@ -7,6 +7,7 @@
 ✅ **Cuộn vô hạn**: Tự động tải thêm 20 sản phẩm khi người dùng cuộn đến cuối danh sách  
 ✅ **Tìm kiếm**: Tìm kiếm sản phẩm theo tên với debouncing (500ms)  
 ✅ **Yêu thích**: Lưu sản phẩm yêu thích vào SQLite database  
+✅ **Tab Navigation**: Tab bar phân chia giữa danh sách sản phẩm và yêu thích  
 ✅ **UI/UX thân thiện**: Hiển thị trạng thái loading, error, empty state  
 ✅ **Hiệu suất cao**: Sử dụng cached images, lazy loading  
 
@@ -35,9 +36,12 @@ lib/
 ├── providers/
 │   └── product_provider.dart   # State management
 ├── screens/
-│   └── product_list_screen.dart # Main screen
+│   ├── main_screen.dart        # Main screen với TabBar
+│   ├── product_list_screen.dart # Product list screen
+│   └── favorites_screen.dart   # Favorites screen
 └── widgets/
-    └── product_card.dart       # Product card widget
+    ├── product_card.dart       # Product card widget
+    └── loading_widgets.dart    # Loading states
 ```
 
 ## Cài đặt và chạy
@@ -83,6 +87,13 @@ flutter run
 - Lưu trữ trong SQLite database
 - Toggle favorite với animation
 - Persistent storage across app sessions
+- **Tab riêng cho yêu thích**: Badge hiển thị số lượng yêu thích
+
+### 📱 Tab Navigation
+- **Tab Sản phẩm**: Danh sách tất cả sản phẩm với tìm kiếm
+- **Tab Yêu thích**: Chỉ hiển thị các sản phẩm đã yêu thích
+- Search bar chỉ hiển thị ở tab sản phẩm
+- Badge đếm số lượng sản phẩm yêu thích
 
 ### 🎨 UI/UX
 - **Loading states**: Skeleton loading, progress indicators

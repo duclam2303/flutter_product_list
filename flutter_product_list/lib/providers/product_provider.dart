@@ -16,7 +16,26 @@ class ProductProvider extends ChangeNotifier {
   List<Product> get products => _products;
   
   Set<int> _favoriteIds = {};
+  // Get favorite products from current list
+  List<Product> get favoriteProducts {
+    if (_favoritesSearchQuery.isEmpty) {
+      return _products.where((product) => _favoriteIds.contains(product.id)).toList();
+    } else {
+      return _products
+          .where((product) => _favoriteIds.contains(product.id))
+          .where((product) => 
+            product.title.toLowerCase().contains(_favoritesSearchQuery.toLowerCase()) ||
+            product.description.toLowerCase().contains(_favoritesSearchQuery.toLowerCase()) ||
+            product.category.toLowerCase().contains(_favoritesSearchQuery.toLowerCase())
+          )
+          .toList();
+    }
+  }
+  
   Set<int> get favoriteIds => _favoriteIds;
+  
+  String _favoritesSearchQuery = '';
+  String get favoritesSearchQuery => _favoritesSearchQuery;
   
   LoadingState _loadingState = LoadingState.idle;
   LoadingState get loadingState => _loadingState;
@@ -83,9 +102,7 @@ class ProductProvider extends ChangeNotifier {
   // Load more products (infinite scroll)
   Future<void> loadMoreProducts() async {
     if (_loadingState == LoadingState.loadingMore || _hasReachedMax) return;
-    
     _setLoadingState(LoadingState.loadingMore);
-    
     try {
       ProductResponse response;
       if (_currentSearchQuery.isEmpty) {
@@ -97,13 +114,15 @@ class ProductProvider extends ChangeNotifier {
           limit: 20,
         );
       }
-      
+      // Nếu không có sản phẩm mới hoặc số lượng trả về < 20 thì đã hết dữ liệu
+      if (response.products.isEmpty || response.products.length < 20) {
+        _hasReachedMax = true;
+      }
       _products.addAll(response.products);
       _currentSkip += response.products.length;
-      _hasReachedMax = _products.length >= response.total;
       _setLoadingState(LoadingState.idle);
     } catch (e) {
-      _setError(e.toString());
+      _setError('Không thể tải thêm sản phẩm');
     }
   }
   
@@ -160,6 +179,12 @@ class ProductProvider extends ChangeNotifier {
     } catch (e) {
       debugPrint('Error toggling favorite: $e');
     }
+  }
+  
+  // Search favorites locally
+  void searchFavorites(String query) {
+    _favoritesSearchQuery = query.trim();
+    notifyListeners();
   }
   
   bool isFavorite(int productId) {
