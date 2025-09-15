@@ -153,11 +153,3 @@ flutter build web      # Web
 ```
 
 ---
-
-**Tác giả**: GitHub Copilot  
-**Ngày tạo**: 15/09/2025  
-**Flutter Version**: 3.9.0+
-
----
-
-Nếu cần bổ sung hướng dẫn, ví dụ code, hoặc chi tiết về các màn hình, vui lòng liên hệ!
