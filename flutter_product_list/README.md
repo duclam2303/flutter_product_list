@@ -1,125 +1,118 @@
 # Flutter Product List App
 
-Ứng dụng Flutter hiển thị danh sách sản phẩm với tính năng cuộn vô hạn và tìm kiếm, sử dụng API từ DummyJSON.
+Ứng dụng Flutter hiển thị danh sách sản phẩm với cuộn vô hạn, tìm kiếm thông minh, yêu thích, giỏ hàng và giao diện hiện đại. Sử dụng API từ DummyJSON.
 
-## Tính năng chính
+## 🚀 Tính năng nổi bật
 
-✅ **Cuộn vô hạn**: Tự động tải thêm 20 sản phẩm khi người dùng cuộn đến cuối danh sách  
-✅ **Tìm kiếm**: Tìm kiếm sản phẩm theo tên với debouncing (500ms)  
-✅ **Yêu thích**: Lưu sản phẩm yêu thích vào SQLite database  
-✅ **Tab Navigation**: Tab bar phân chia giữa danh sách sản phẩm và yêu thích  
-✅ **UI/UX thân thiện**: Hiển thị trạng thái loading, error, empty state  
-✅ **Hiệu suất cao**: Sử dụng cached images, lazy loading  
+- **Cuộn vô hạn**: Tải thêm sản phẩm khi cuộn đến cuối danh sách.
+- **Tìm kiếm real-time**: Debounce 500ms, tìm kiếm theo tên sản phẩm.
+- **Yêu thích**: Lưu sản phẩm vào SQLite, badge đếm số lượng.
+- **Giỏ hàng**: Thêm/xóa sản phẩm, xác nhận thanh toán với giao diện đẹp.
+- **Chi tiết sản phẩm**: Xem thông tin, hình ảnh, thêm vào giỏ hàng.
+- **Tab Navigation**: Chuyển đổi giữa sản phẩm, yêu thích, giỏ hàng.
+- **UI/UX hiện đại**: Skeleton loading, error/empty state, responsive, Material Design 3.
 
-## Công nghệ sử dụng
+## 🛠 Công nghệ sử dụng
 
-- **Flutter**: Framework chính
-- **Provider**: State management  
+- **Flutter 3.x**
+- **Provider**: State management
 - **Freezed**: Code generation cho models
-- **SQLite**: Local database cho favorites
-- **RxDart**: Debouncing cho search
-- **Cached Network Image**: Cache và hiển thị ảnh
-- **HTTP**: API calls
+- **SQLite**: Lưu trữ yêu thích
+- **RxDart**: Debounce tìm kiếm
+- **CachedNetworkImage**: Cache ảnh sản phẩm
+- **HTTP**: Kết nối API
 
-## Cấu trúc project
+## 📁 Cấu trúc dự án
 
 ```
 lib/
-├── main.dart                    # Entry point
+├── main.dart
 ├── models/
-│   ├── product.dart            # Product model với Freezed
-│   ├── product.freezed.dart    # Generated file
-│   └── product.g.dart          # Generated file
+│   └── product.dart
 ├── services/
-│   ├── api_service.dart        # API calls
-│   └── database_service.dart   # SQLite operations
+│   ├── api_service.dart
+│   └── database_service.dart
 ├── providers/
-│   └── product_provider.dart   # State management
+│   └── product_provider.dart
 ├── screens/
-│   ├── main_screen.dart        # Main screen với TabBar
-│   ├── product_list_screen.dart # Product list screen
-│   └── favorites_screen.dart   # Favorites screen
+│   ├── main_screen.dart
+│   ├── product_list_screen.dart
+│   ├── favorites_screen.dart
+│   ├── cart_screen.dart
+│   └── product_detail_screen.dart
 └── widgets/
-    ├── product_card.dart       # Product card widget
-    └── loading_widgets.dart    # Loading states
+    ├── product_card.dart
+    ├── loading_widgets.dart
+    └── custom_dialogs.dart
 ```
 
-## Cài đặt và chạy
+## ⚡ Hướng dẫn cài đặt & chạy
 
-### 1. Cài đặt dependencies
+1. **Cài đặt dependencies**
+   ```bash
+   flutter pub get
+   ```
 
-```bash
-flutter pub get
-```
+2. **Generate code cho Freezed models**
+   ```bash
+   dart run build_runner build
+   ```
 
-### 2. Generate code (Freezed models)
+3. **Chạy ứng dụng**
+   ```bash
+   flutter run
+   ```
 
-```bash
-dart run build_runner build
-```
+## 🔗 API sử dụng
 
-### 3. Chạy ứng dụng
+- Lấy danh sách: `GET /products?limit=20&skip=0`
+- Tìm kiếm: `GET /products/search?q=query&limit=20&skip=0`
+- Tham khảo: [DummyJSON Products API](https://dummyjson.com/docs/products)
 
-```bash
-flutter run
-```
+## 💡 Chi tiết tính năng
 
-## API Reference
+### Infinite Scrolling
+- Tự động tải thêm khi cuộn đến cuối
+- Loading indicator khi đang tải
+- Retry khi lỗi mạng
 
-Ứng dụng sử dụng [DummyJSON Products API](https://dummyjson.com/docs/products):
+### Smart Search
+- Debounce 500ms
+- Tìm kiếm real-time
+- Nút clear search
 
-- **Lấy danh sách**: `GET /products?limit=20&skip=0`
-- **Tìm kiếm**: `GET /products/search?q=query&limit=20&skip=0`
+### Favorites System
+- Lưu vào SQLite
+- Animation khi toggle
+- Badge hiển thị số lượng
 
-## Tính năng đặc biệt
+### Cart & Checkout
+- Thêm/xóa sản phẩm vào giỏ
+- Dialog xác nhận thanh toán hiện đại
+- Snackbar thông báo thành công
 
-### 🔄 Infinite Scrolling
-- Tự động phát hiện khi người dùng cuộn đến cuối
-- Tải thêm 20 sản phẩm một lần
-- Hiển thị loading indicator khi đang tải
+### UI/UX
+- Skeleton loading, progress indicator
+- Error/empty state rõ ràng
+- Pull to refresh
+- Responsive cho mọi thiết bị
 
-### 🔍 Smart Search
-- Debouncing 500ms để tránh gọi API quá nhiều
-- Tìm kiếm real-time khi người dùng gõ
-- Clear search với một nút
+## 🧩 Xử lý lỗi
 
-### ❤️ Favorites System
-- Lưu trữ trong SQLite database
-- Toggle favorite với animation
-- Persistent storage across app sessions
-- **Tab riêng cho yêu thích**: Badge hiển thị số lượng yêu thích
+- **Mất kết nối**: Hiển thị thông báo, nút "Thử lại"
+- **API lỗi**: Cơ chế retry khi tải thêm
+- **Không tìm thấy sản phẩm**: Empty state, hướng dẫn
+- **Database lỗi**: Fallback cho favorites
 
-### 📱 Tab Navigation
-- **Tab Sản phẩm**: Danh sách tất cả sản phẩm với tìm kiếm
-- **Tab Yêu thích**: Chỉ hiển thị các sản phẩm đã yêu thích
-- Search bar chỉ hiển thị ở tab sản phẩm
-- Badge đếm số lượng sản phẩm yêu thích
+## 🚀 Tối ưu hiệu năng
 
-### 🎨 UI/UX
-- **Loading states**: Skeleton loading, progress indicators
-- **Error handling**: Network errors, API failures
-- **Empty states**: No products found, end of list
-- **Pull to refresh**: Refresh toàn bộ danh sách
-- **Responsive design**: Hoạt động tốt trên mọi kích thước màn hình
+- CachedNetworkImage cho ảnh
+- ListView.builder lazy loading
+- Debounced search giảm API calls
+- Provider quản lý state hiệu quả
+- Dispose controller đúng cách
 
-## Xử lý lỗi
-
-Ứng dụng xử lý các trường hợp sau:
-
-- ❌ **Không có kết nối internet**: Hiển thị error message với nút "Try Again"
-- ❌ **API lỗi**: Retry mechanism cho loading more
-- ❌ **Không tìm thấy sản phẩm**: Empty state với hướng dẫn
-- ❌ **Database lỗi**: Graceful fallback cho favorites
-
-## Performance Optimizations
-
-- **Image caching**: Sử dụng CachedNetworkImage
-- **Lazy loading**: ListView.builder
-- **Debounced search**: Giảm API calls
-- **State management**: Efficient Provider usage
-- **Memory management**: Proper dispose of controllers
-
-## Dependencies
+## 📦 Dependencies
 
 ```yaml
 dependencies:
@@ -144,27 +137,19 @@ dev_dependencies:
   json_serializable: ^6.7.1
 ```
 
-## Testing
+## 🧪 Testing
 
 ```bash
-# Run unit tests
 flutter test
-
-# Run widget tests
 flutter test test/widget_test.dart
 ```
 
-## Build
+## 📦 Build
 
 ```bash
-# Build for Android
-flutter build apk
-
-# Build for iOS
-flutter build ios
-
-# Build for Web
-flutter build web
+flutter build apk      # Android
+flutter build ios      # iOS
+flutter build web      # Web
 ```
 
 ---
@@ -172,3 +157,7 @@ flutter build web
 **Tác giả**: GitHub Copilot  
 **Ngày tạo**: 15/09/2025  
 **Flutter Version**: 3.9.0+
+
+---
+
+Nếu cần bổ sung hướng dẫn, ví dụ code, hoặc chi tiết về các màn hình, vui lòng liên hệ!
